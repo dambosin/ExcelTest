@@ -10,29 +10,57 @@ namespace ExcelTest
 {
     public static class ExcelHandler
     {
-        public static Dictionary<String, ExcelApplication> Applications { get; set; } = new();
-
+        public static Dictionary<String, PostExcelApplication> Applications { get; set; } = new();
+        delegate void Execute();
         public static void Open(string name, string source)
         {
-            if (Applications.ContainsKey(name))
+            if (!CheckKey(name, () => AppAlreadyExistAlert(name)))
             {
-                Console.WriteLine($"File with name:{name} already exists");
-                return;
+                Applications.Add(name, new PostExcelApplication(source));
             }
-            Applications.Add(name, new ExcelApplication(source));
         }
 
         public static void Show(string name)
         {
+            if (!CheckKey(name, () => Applications[name].SetVisibility(true)))
+            {
+                AppNotExistAlert(name);
+            }   
+        }
+
+        public static void Hide(string name)
+        {
+            if (!CheckKey(name, () => Applications[name].SetVisibility(false)))
+            {
+                AppNotExistAlert(name);
+            }
+        }
+
+        public static void Configure(string name, PostModel model)
+        {
+            if (!CheckKey(name, () => Applications[name].Configure(model)))
+            {
+                AppNotExistAlert(name);
+            }
+        }
+
+        private static bool CheckKey(string name, Execute execute)
+        {
             if (Applications.ContainsKey(name))
             {
-                Applications[name].SetVisibility(true);
+                execute();
+                return true;
             }
-            else
-            {
-                Console.WriteLine($"Application with name:{name} doesn't exist");
-            }
-            
+            return false;
+        }
+        private static void AppAlreadyExistAlert(string name)
+        {
+            Console.WriteLine($"File with name:{name} already exists");
+        }
+
+        private static void AppNotExistAlert(string name)
+        {
+            Console.WriteLine($"Application with name:{name} doesn't exist");
         }
         /*static void Displayl(IEnumerable<Account> accounts)
         {
