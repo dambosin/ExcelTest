@@ -62,6 +62,14 @@ namespace ExcelTest
         {
             Console.WriteLine($"Application with name:{name} doesn't exist");
         }
+
+        public static void Close(string name)
+        {
+            if(!CheckKey(name, () => Applications[name].Close()))
+            {
+                AppNotExistAlert(name);
+            }
+        }
         /*static void Displayl(IEnumerable<Account> accounts)
         {
             var excelApp = new Excel.Application();

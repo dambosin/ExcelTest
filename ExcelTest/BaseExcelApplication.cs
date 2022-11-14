@@ -15,5 +15,11 @@ namespace ExcelTest
         {
             App.Visible = isVisible;
         }
+
+        public void Close()
+        {
+            Workbook.Close(0);
+            App.Quit();
+        }
     }
 }

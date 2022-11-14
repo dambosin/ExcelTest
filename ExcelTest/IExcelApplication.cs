@@ -9,5 +9,7 @@ namespace ExcelTest
 
         public void SetVisibility(bool isVisibe);
 
+        public void Close();
+
     }
 }

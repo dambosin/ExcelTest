@@ -14,9 +14,12 @@ var model = new PostModel
 };
 model.PriceInText = PriceConverter.Convert((int)model.Price);
 
-ExcelHandler.Configure("Post", model);
 
-ExcelHandler.Show("Post");
+
+ExcelHandler.Configure("Post", model);
+ExcelHandler.Close("Post");
+
+//ExcelHandler.Show("Post");
 
 
 

@@ -19,6 +19,9 @@ namespace ExcelTest
             worksheet.Cells[12, "E"] = model.Name;
             worksheet.Cells[15, "E"] = model.Adress;
             worksheet.Cells[20, "F"] = model.Phone;
+            worksheet.SaveAs($"D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\PostDocs\\{model.Id.ToString()}");
+            Workbook.Close(0);
+            App.Quit();
 
         }
     }
