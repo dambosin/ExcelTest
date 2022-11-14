@@ -14,9 +14,21 @@ var model = new PostModel
 };
 model.PriceInText = PriceConverter.Convert((int)model.Price);
 
+var model2 = new PostModel
+{
+    Id = 1235,
+    Size = new Rectangle(0, 0, 20, 20),
+    Phone = "447868522",
+    Name = "Голубцова Ксения Валерьевна",
+    Adress = "г.Могилев, ул. Залуцкого д3,кв 412., 212040",
+    Price = 135.15
+};
+model2.PriceInText = PriceConverter.Convert((int)model2.Price);
 
 
 ExcelHandler.Configure("Post", model);
+ExcelHandler.Configure("Post", model2);
+
 ExcelHandler.Close("Post");
 
 //ExcelHandler.Show("Post");

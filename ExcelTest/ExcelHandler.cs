@@ -69,6 +69,10 @@ namespace ExcelTest
             {
                 AppNotExistAlert(name);
             }
+            else
+            {
+                Applications.Remove(name);
+            }
         }
         /*static void Displayl(IEnumerable<Account> accounts)
         {
