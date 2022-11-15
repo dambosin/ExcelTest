@@ -11,16 +11,14 @@ namespace ExcelTest
 
         public void Configure(PostModel model)
         {
-            _Worksheet worksheet = (Worksheet)App.ActiveSheet;
-            worksheet.Cells[20, "C"] = $"{model.Id} {model.Size.Width}x{model.Size.Height}";
-            worksheet.Cells[3, "F"] = model.Price;
-            worksheet.Cells[4, "G"] = model.Price * 100 % 100;
-            worksheet.Cells[4, "D"] = model.PriceInText;
-            worksheet.Cells[12, "E"] = model.Name;
-            worksheet.Cells[15, "E"] = model.Adress;
-            worksheet.Cells[20, "F"] = model.Phone;
-            worksheet.SaveAs($"D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\PostDocs\\{model.Id.ToString()}");
-
+            Worksheet = App.ActiveSheet;
+            Worksheet.Cells[20, "C"] = $"{model.Id} {model.Size.Width}x{model.Size.Height}";
+            Worksheet.Cells[3, "F"] = model.Price;
+            Worksheet.Cells[4, "G"] = model.Price * 100 % 100;
+            Worksheet.Cells[4, "D"] = model.PriceInText;
+            Worksheet.Cells[12, "E"] = model.Name;
+            Worksheet.Cells[15, "E"] = model.Adress;
+            Worksheet.Cells[20, "F"] = model.Phone;
         }
     }
 }

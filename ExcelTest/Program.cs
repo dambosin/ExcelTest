@@ -1,38 +1,17 @@
 ﻿using ExcelTest;
-using System.Drawing;
 
-ExcelHandler.Open("Post", "D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\PostExample.xlsx");
+BaseExcelApplication dataExcel = new("D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\Data.xlsx");
+var range = dataExcel.GetData();
 
-var model = new PostModel
+List<PostModel> models = Parser.Parse(range);
+dataExcel.Close();
+
+PostExcelApplication post = new("D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\PostExample.xlsx");
+foreach (var model in models)
 {
-    Id = 1234,
-    Size = new Rectangle(0, 0, 20, 20),
-    Phone = "447868522",
-    Name = "Голубцова Ксения Валерьевна",
-    Adress = "г.Могилев, ул. Залуцкого д3,кв 412., 212040",
-    Price = 135.15
-};
-model.PriceInText = PriceConverter.Convert((int)model.Price);
-
-var model2 = new PostModel
-{
-    Id = 1235,
-    Size = new Rectangle(0, 0, 20, 20),
-    Phone = "447868522",
-    Name = "Голубцова Ксения Валерьевна",
-    Adress = "г.Могилев, ул. Залуцкого д3,кв 412., 212040",
-    Price = 135.15
-};
-model2.PriceInText = PriceConverter.Convert((int)model2.Price);
-
-
-ExcelHandler.Configure("Post", model);
-ExcelHandler.Configure("Post", model2);
-
-ExcelHandler.Close("Post");
-
-//ExcelHandler.Show("Post");
-
-
+    post.Configure(model);
+    post.Save($"D:\\Repos\\ExcelTest\\ExcelTest\\bin\\Debug\\net6.0\\PostDocs\\{model.Id}");
+}
+post.Close();
 
 Console.WriteLine("WTF is hapenning?");

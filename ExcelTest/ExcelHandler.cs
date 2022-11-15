@@ -12,11 +12,11 @@ namespace ExcelTest
     {
         public static Dictionary<String, PostExcelApplication> Applications { get; set; } = new();
         delegate void Execute();
-        public static void Open(string name, string source)
+        public static void Open<T>(string name, string source)where T : IExcelApplication, new()
         {
             if (!CheckKey(name, () => AppAlreadyExistAlert(name)))
             {
-                Applications.Add(name, new PostExcelApplication(source));
+             //   Applications.Add(name, new T(source));
             }
         }
 
@@ -31,6 +31,13 @@ namespace ExcelTest
         public static void Hide(string name)
         {
             if (!CheckKey(name, () => Applications[name].SetVisibility(false)))
+            {
+                AppNotExistAlert(name);
+            }
+        }
+        public static void Save(string name, string path)
+        {
+            if (!CheckKey(name, () => Applications[name].Save(path)))
             {
                 AppNotExistAlert(name);
             }

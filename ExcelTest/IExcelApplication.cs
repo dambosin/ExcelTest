@@ -11,5 +11,9 @@ namespace ExcelTest
 
         public void Close();
 
+        public Excel.Range GetData();
+
+        public void Save(string path);
+
     }
 }
