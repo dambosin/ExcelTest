@@ -1,24 +1,36 @@
-﻿using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
+﻿using ExcelTest.Interfaces;
+using ExcelTest.Models;
 
 namespace ExcelTest
 {
-    public class PostExcelApplication : BaseExcelApplication, IExcelApplication
+    public class PostExcelApplication : ExcelApplication
     {
-        public PostExcelApplication(string source) : base(source)
-        {
-        }
+        public PostExcelApplication() : base() { }
+        public PostExcelApplication(string source) : base(source) { }
 
-        public void Configure(PostModel model)
+        public override void Configure(BaseModel model)
         {
+            if (model is not PostModel postModel)
+            {
+                throw new MemberAccessException("Wrong model used");
+            }
             Worksheet = App.ActiveSheet;
-            Worksheet.Cells[20, "C"] = $"{model.Id} {model.Size.Width}x{model.Size.Height}";
-            Worksheet.Cells[3, "F"] = model.Price;
-            Worksheet.Cells[4, "G"] = model.Price * 100 % 100;
-            Worksheet.Cells[4, "D"] = model.PriceInText;
-            Worksheet.Cells[12, "E"] = model.Name;
-            Worksheet.Cells[15, "E"] = model.Adress;
-            Worksheet.Cells[20, "F"] = model.Phone;
+            Worksheet.Cells[20, "C"] = $"{postModel.Id} {postModel.Size}";
+            Worksheet.Cells[3, "F"] = postModel.Price;
+            Worksheet.Cells[4, "G"] = postModel.Price * 100 % 100;
+            Worksheet.Cells[4, "D"] = postModel.PriceInText;
+            Worksheet.Cells[12, "E"] = postModel.Name;
+            Worksheet.Cells[15, "E"] = postModel.Adress;
+            Worksheet.Cells[20, "F"] = postModel.Phone;
+            if (postModel.IsCarefully) {
+                Worksheet.Cells[20, "A"].Font.Bold = true;
+                Worksheet.Cells[20, "A"] = "X ОСТОРОЖНО";
+            }
+            else
+            {
+                Worksheet.Cells[20, "A"].Font.Bold = false;
+                Worksheet.Cells[20, "A"] = "□ ОСТОРОЖНО";
+            }
         }
     }
 }

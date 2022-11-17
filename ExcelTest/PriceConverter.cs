@@ -9,147 +9,62 @@ namespace ExcelTest
 {
     public static class PriceConverter
     {
-
-        public static string Convert(int price)
+        public static string Convert(double price)
         {
             string result = "";
-            switch (price / 100)
+            result += (int)(price / 100) switch
             {
-                case 9: 
-                    result += "Девятьсот ";
-                    break;
-                case 8: 
-                    result += "Восемьсот ";
-                    break;
-                case 7:
-                    result += "Семьсот ";
-                    break;
-                case 6:
-                    result += "Шестьсот ";
-                    break;
-                case 5:
-                    result += "Пятьсот ";
-                    break;
-                case 4:
-                    result += "Четыреста ";
-                    break;
-                case 3:
-                    result += "Триста ";
-                    break;
-                case 2:
-                    result += "Двести ";
-                    break;
-                case 1:
-                    result += "Сто ";
-                    break;
-                default:
-                    break;
-            }
+                9 => "Девятьсот ",
+                8 => "Восемьсот ",
+                7 => "Семьсот ",
+                6 => "Шестьсот ",
+                5 => "Пятьсот ",
+                4 => "Четыреста ",
+                3 => "Триста ",
+                2 => "Двести ",
+                1 => "Сто ",
+                _ => ""
+            };
             price %= 100;
-            switch (price / 10)
+            result += (int)(price / 10) switch
             {
-                case 9:
-                    result += "Девяносто ";
-                    break;
-                case 8:
-                    result += "Восемьдесят ";
-                    break;
-                case 7:
-                    result += "Семьдесят ";
-                    break;
-                case 6:
-                    result += "Шестьдесят ";
-                    break;
-                case 5:
-                    result += "Пятьдесят ";
-                    break;
-                case 4:
-                    result += "Сорок ";
-                    break;
-                case 3:
-                    result += "Тридцать ";
-                    break;
-                case 2:
-                    result += "Двадцать ";
-                    break;
-                case 1:
-                    switch (price%10)
-                    {
-                        case 9:
-                            result += "Девятнадцать ";
-                            break;
-                        case 8:
-                            result += "Восемнадцать ";
-                            break;
-                        case 7:
-                            result += "Семнадцать ";
-                            break;
-                        case 6:
-                            result += "Шестнадцать ";
-                            break;
-                        case 5:
-                            result += "Пятнадцать ";
-                            break;
-                        case 4:
-                            result += "Четырнадцать ";
-                            break;
-                        case 3:
-                            result += "Тринадцать ";
-                            break;
-                        case 2:
-                            result += "Двенадцать ";
-                            break;
-                        case 1:
-                            result += "Одиннадцать ";
-                            break;
-                        default:
-                            result += "Десять ";
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            if(price / 10 == 1)
+                9 => "Девяносто ",
+                8 => "Восемьдесят ",
+                7 => "Семьдесят ",
+                6 => "Шестьдесят ",
+                5 => "Пятьдесят ",
+                4 => "Сорок ",
+                3 => "Тридцать ",
+                2 => "Двадцать ",
+                1 => (int)(price % 10) switch
+                {
+                    9 => "Девятнадцать ",
+                    8 => "Восемнадцать ",
+                    7 => "Семнадцать ",
+                    6 => "Шестнадцать ",
+                    5 => "Пятнадцать ",
+                    4 => "Четырнадцать ",
+                    3 => "Тринадцать ",
+                    2 => "Двенадцать ",
+                    1 => "Одиннадцать ",
+                    _ => "Десять ",
+                },
+                _ => ""
+            };
+            if(price / 10 == 1) return result;
+            result += (int)(price % 10) switch
             {
-                return result;
-            }
-            switch (price % 10)
-            {
-                case 9:
-                    result += "Девять ";
-                    break;
-                case 8:
-                    result += "Восемь ";
-                    break;
-                case 7:
-                    result += "Семь ";
-                    break;
-                case 6:
-                    result += "Шесть ";
-                    break;
-                case 5:
-                    result += "Пять ";
-                    break;
-                case 4:
-                    result += "Четыре ";
-                    break;
-                case 3:
-                    result += "Три ";
-                    break;
-                case 2:
-                    result += "Два ";
-                    break;
-                case 1:
-                    result += "Один ";
-                    break;
-                default:
-                    if(result == "") 
-                    { 
-                        result += "Ноль "; 
-                    }
-                    break;
-            }
+                9 => "Девять ",
+                8 => "Восемь ",
+                7 => "Семь ",
+                6 => "Шесть ",
+                5 => "Пять ",
+                4 => "Четыре ",
+                3 => "Три ",
+                2 => "Два ",
+                1 => "Один ",
+                _ => result == "" ? result += "Ноль " : ""
+            };
             return result;
         }
 
